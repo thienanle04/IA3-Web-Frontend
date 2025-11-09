@@ -146,9 +146,9 @@ function LoginForm({
         )}
       </form.Subscribe>
 
-      <Divider sx={{ my: 2 }}>OR</Divider>
+      <Divider sx={{ my: 2 }}>hoặc</Divider>
       <Button variant="outlined" fullWidth onClick={onSwitch}>
-        Don't have an account? Sign Up
+        Bạn chưa có tài khoản? Đăng ký
       </Button>
     </Box>
   );
@@ -269,9 +269,9 @@ function RegisterForm({
         )}
       </form.Subscribe>
 
-      <Divider sx={{ my: 2 }}>OR</Divider>
+      <Divider sx={{ my: 2 }}>hoặc</Divider>
       <Button variant="outlined" fullWidth onClick={onSwitch}>
-        Already have an account? Log In
+        Bạn đã có tài khoản? Đăng nhập
       </Button>
     </Box>
   );
