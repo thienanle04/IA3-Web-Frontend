@@ -43,7 +43,7 @@ function LoginForm({
       // 1. Call the global login function from AuthContext to store the token
       auth.login(data.token);
       // 2. Report success to the parent modal
-      onLoginSuccess(data.message || "Login successful!");
+      onLoginSuccess("Login successfully!");
       // 3. Reset the form
       form.reset();
     },
@@ -174,8 +174,8 @@ function RegisterForm({
 
   const mutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: (data) => {
-      onRegisterSuccess(data.message || "Registration successful!");
+    onSuccess: (_) => {
+      onRegisterSuccess("Create a new account successfully!");
       form.reset();
     },
     onError: (error: Error) => {

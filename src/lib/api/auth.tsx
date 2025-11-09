@@ -15,7 +15,7 @@ export const registerUser = async (data: RegisterType) => {
   if (!response.ok) {
     // Provide meaningful error messages from the NestJS backend
     const errorData = await response.json()
-    throw new Error(errorData.message || 'Registration failed')
+    throw new Error(errorData.error || 'Registration failed')
   }
 
   // Return the success response (e.g., { message: 'User created' })
@@ -36,7 +36,7 @@ export const loginUser = async (data: LoginType) => {
 
   if (!response.ok) {
     const errorData = await response.json()
-    throw new Error(errorData.message || 'Invalid email or password')
+    throw new Error(errorData.error || 'Invalid email or password')
   }
 
   // We assume the backend returns a token on successful login
