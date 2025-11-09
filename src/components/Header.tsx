@@ -9,14 +9,23 @@ import {
   Container,
   Button,
   MenuItem,
+  Avatar,
+  Tooltip,
 } from "@mui/material";
 import { Menu as MenuIcon, Adb as AdbIcon } from "@mui/icons-material";
 import AuthModal from "./AuthModal";
+import { useAuth } from "../context/AuthContext";
 
 const pages = ["Giới thiệu", "Cổ đông", "Liên hệ"];
 
 function Header() {
+  const { isLoggedIn, user, logout } = useAuth();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
@@ -26,6 +35,19 @@ function Header() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    logout();
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -133,16 +155,60 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" }, ml: 2 }}>
-            <Button
-              variant="contained"
-              onClick={handleOpenModal}
-              sx={{
-                backgroundColor: "white",
-                color: "primary.main",
-              }}
-            >
-              Đăng nhập
-            </Button>
+            {isLoggedIn && user ? (
+              // --- If LOGGED IN: Show Avatar and Menu ---
+              <>
+                <Tooltip title="Mở cài đặt">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt={user.fullName}
+                      sx={{ bgcolor: "primary.dark" }}
+                    >
+                      {/* Use the first letter of the user's name */}
+                      {user.fullName[0].toUpperCase()}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar-user"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Tài khoản</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Đăng xuất</Typography>
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              // --- If LOGGED OUT: Show Login Button ---
+              <Button
+                variant="contained"
+                onClick={handleOpenModal}
+                sx={{
+                  backgroundColor: "white",
+                  color: "primary.main",
+                  "&:hover": {
+                    backgroundColor: "grey.100",
+                  },
+                }}
+              >
+                Đăng nhập
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </Container>

@@ -75,8 +75,8 @@ function LoginForm({
     >
       <form.Field
         name="email"
-        validators={{ onBlur: LoginSchema.shape.email }}
         children={({ state, handleChange, handleBlur }) => {
+          const hasError = state.meta.isTouched && !!state.meta.errors.length;
           return (
             <TextField
               required
@@ -84,11 +84,13 @@ function LoginForm({
               label="Email"
               fullWidth
               variant="outlined"
-              defaultValue={state.value}
+              value={state.value} // Use 'value' for controlled component
               onChange={(e) => handleChange(e.target.value)}
               onBlur={handleBlur}
               placeholder="you@example.com"
               sx={{ mb: 2 }}
+              error={hasError}
+              helperText={hasError ? state.meta.errors[0]?.message : null}
             />
           );
         }}
@@ -96,8 +98,8 @@ function LoginForm({
 
       <form.Field
         name="password"
-        validators={{ onBlur: LoginSchema.shape.password }}
         children={({ state, handleChange, handleBlur }) => {
+          const hasError = state.meta.isTouched && !!state.meta.errors.length;
           return (
             <TextField
               required
@@ -105,11 +107,13 @@ function LoginForm({
               label="Password"
               fullWidth
               variant="outlined"
-              defaultValue={state.value}
+              value={state.value}
               onChange={(e) => handleChange(e.target.value)}
               onBlur={handleBlur}
               placeholder="••••••••"
               type="password"
+              error={hasError}
+              helperText={hasError ? state.meta.errors[0]?.message : null}
             />
           );
         }}
@@ -121,7 +125,7 @@ function LoginForm({
           direction="row"
           alignItems="center"
           spacing={1}
-          sx={{ color: "error.main" }}
+          sx={{ color: "error.main", pt: 2 }}
         >
           <ErrorOutlineIcon fontSize="small" />
           <Typography variant="body2">{feedback.message}</Typography>
@@ -192,6 +196,7 @@ function RegisterForm({
   return (
     <Box
       sx={{ p: 2 }}
+      component="form"
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -201,19 +206,22 @@ function RegisterForm({
     >
       <form.Field
         name="email"
-        validators={{ onBlur: LoginSchema.shape.email }}
         children={({ state, handleChange, handleBlur }) => {
+          const hasError = state.meta.isTouched && !!state.meta.errors.length;
           return (
             <TextField
               required
               id="email"
               label="Email"
+              fullWidth
               variant="outlined"
-              defaultValue={state.value}
+              value={state.value} // Use 'value' for controlled component
               onChange={(e) => handleChange(e.target.value)}
               onBlur={handleBlur}
               placeholder="you@example.com"
               sx={{ mb: 2 }}
+              error={hasError}
+              helperText={hasError ? state.meta.errors[0]?.message : null}
             />
           );
         }}
@@ -221,19 +229,22 @@ function RegisterForm({
 
       <form.Field
         name="password"
-        validators={{ onBlur: LoginSchema.shape.password }}
         children={({ state, handleChange, handleBlur }) => {
+          const hasError = state.meta.isTouched && !!state.meta.errors.length;
           return (
             <TextField
               required
               id="password"
               label="Password"
+              fullWidth
               variant="outlined"
-              defaultValue={state.value}
+              value={state.value} // Use 'value' for controlled component
               onChange={(e) => handleChange(e.target.value)}
               onBlur={handleBlur}
-              placeholder="At least 8 characters"
+              placeholder="••••••••"
               type="password"
+              error={hasError}
+              helperText={hasError ? state.meta.errors[0]?.message : null}
             />
           );
         }}
@@ -244,7 +255,7 @@ function RegisterForm({
           direction="row"
           alignItems="center"
           spacing={1}
-          sx={{ color: "error.main" }}
+          sx={{ color: "error.main", pt: 2 }}
         >
           <ErrorOutlineIcon fontSize="small" />
           <Typography variant="body2">{feedback.message}</Typography>

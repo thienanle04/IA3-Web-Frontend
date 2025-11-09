@@ -9,6 +9,12 @@ npm install
 npm run start
 ```
 
+or with docker-compose:
+
+```docker
+docker-compose up -d
+```
+
 # Building For Production
 
 To build this application for production:
