@@ -20,6 +20,7 @@ import { useForm } from "@tanstack/react-form";
 import { LoginSchema, RegisterSchema } from "@/schemas/auth";
 import { useAuth } from "../context/AuthContext";
 import { loginUser, registerUser } from "@/lib/api/auth";
+import type { UserProfile } from "@/types/auth";
 // --------------------------------------------------------------------------
 
 // --- LOGIN FORM COMPONENT ---
@@ -39,10 +40,10 @@ function LoginForm({
 
   const mutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      // 1. Call the global login function from AuthContext to store the token
-      auth.login(data.token);
-      // 2. Report success to the parent modal
+    onSuccess: (data: UserProfile) => {
+      // 1. Call the global login function from AuthContext
+      auth.login(data); // Pass the UserProfile object
+      // 2. Report success
       onLoginSuccess("Login successfully!");
       // 3. Reset the form
       form.reset();

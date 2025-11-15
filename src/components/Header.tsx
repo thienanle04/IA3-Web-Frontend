@@ -161,11 +161,11 @@ function Header() {
                 <Tooltip title="Mở cài đặt">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt={user.fullName}
+                      alt={user.email}
                       sx={{ bgcolor: "primary.dark" }}
                     >
                       {/* Use the first letter of the user's name */}
-                      {user.fullName[0].toUpperCase()}
+                      {user.email[0].toUpperCase()}
                     </Avatar>
                   </IconButton>
                 </Tooltip>
